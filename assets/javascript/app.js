@@ -2,7 +2,7 @@
 var correct = 0;
 var incorrect = 0;
 var notAnswered = 0;
-var seconds = 12;
+var seconds = 60;
 var intervalId;
 
 // Trivia questions object
