@@ -28,7 +28,7 @@ var triviaQuestions = [
         },
         answer: "b"
     },
-
+    
     {
         question: "In which month do Russians celebrate the October Revolution?",
         options: {
@@ -38,8 +38,30 @@ var triviaQuestions = [
             d: "December"
         },
         answer: "c"
-    }
+    },
 
+    {
+        question: "The Canary Islands in the Atlantic are named after which animal?",
+        options: {
+            a: "Cats",
+            b: "Dogs",
+            c: "Birds",
+            d: "Horses"
+        },
+        answer: "b"
+    },
+
+    {
+        question: "Where are Chinese gooseberries from?",
+        options: {
+            a: "China",
+            b: "Japan",
+            c: "Australia",
+            d: "New Zeland"
+        },
+        answer: "d"
+    }
+    
 ]
 
 // Hide cards and done button at the start of the game
@@ -47,11 +69,11 @@ $("#done-game").hide();
 $("#trivia-questions").hide();
 $("#trivia-results").hide();
 
-// On click event to start the game and finish the game
+// On click events that start and finish the game
 $("#start-game").on("click", showQuestions);
 $("#done-game").on("click", showResults);
 
-// Star game function
+// Show the questions
 function showQuestions() {
 
     // Hide start button and show initial remaining time
@@ -76,13 +98,23 @@ function showQuestions() {
                     <input type="radio" name="question-${i}" autocomplete="off" value="${option}"> ${triviaQuestions[i].options[option]}
                 </label>`);
         };
+
         // Append answers to each of the questions and the questions to the page
-        $("#trivia-questions")
-        .append(
-            `<div class="card-body">
-                <p class="card-text">${triviaQuestions[i].question}</p>
-            </div>`)
-        .append(optionDiv)
+
+        // Create a card div
+        var card = $(`<div class="card-body">`)
+        // Create a p tag with each question
+        var pTag = $(`<p class="card-text">${triviaQuestions[i].question}</p>`)
+
+        // Append pTag to Card and answers to card
+        card.append(pTag);
+        card.append(optionDiv);
+
+
+        // Finally append card with all the html elements to the trivia questions
+        $("#trivia-questions").append(card)
+
+        
     }
 };
 
@@ -111,13 +143,20 @@ function showResults() {
     // Evaluate the results
     var userAnswer = "";
     for (var i = 0; i < triviaQuestions.length; i++) {
+
+        // Grab users choice
         userAnswer = $(`input[name=question-${i}]:checked`).val()
+
+        // If button hasn't been clicked
         if (!userAnswer) {
             notAnswered++;
             console.log("undefined")
+
+        // Correct answer evaluation
         } else if (userAnswer === triviaQuestions[i].answer){
             correct++;
             console.log("yes")
+        // Incorrect answer
         } else {
             incorrect++;
         }
